@@ -17,6 +17,19 @@ class Statistician
 		sorted_numbers[middle]
 	end
 
+	def mode numbers
+		winner = numbers.first
+		winning_score = 0
+		numbers.each do |n|
+			score = numbers.count(n)
+			if score > winning_score
+				winner = n
+				winning_score = score
+			end
+		end
+		winner
+	end
+
 
 end
 
@@ -34,6 +47,11 @@ class StatisticianTest < MiniTest::Test
 	def test_median_sorted
 		s = Statistician.new
 		assert_equal s.median([1,2,3,4,5]), 3
+	end
+
+	def test_mode
+		s = Statistician.new
+		assert_equal s.mode([1,2,5,7,9,1,1]), 1
 	end
 end
 
