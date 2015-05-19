@@ -3,11 +3,7 @@ require 'minitest/autorun'
 
 class Statistician
 	def mean numbers
-		sum_of_numbers = 0
-		numbers.each do |n|
-			sum_of_numbers += n
-		end
-		sum_of_numbers.to_f / numbers.count
+		sum(numbers).to_f / numbers.count
 	end
 
 	def median numbers
@@ -28,6 +24,14 @@ class Statistician
 			end
 		end
 		winner
+	end
+
+	def sum numbers
+		sum_of_numbers = 0
+		numbers.each do |n|
+			sum_of_numbers += n
+		end
+		sum_of_numbers
 	end
 
 
@@ -52,6 +56,11 @@ class StatisticianTest < MiniTest::Test
 	def test_mode
 		s = Statistician.new
 		assert_equal s.mode([1,2,5,7,9,1,1]), 1
+	end
+
+	def test_sum_of_numbers
+		s = Statistician.new
+		assert_equal s.sum([5,10,15]), 30
 	end
 end
 
