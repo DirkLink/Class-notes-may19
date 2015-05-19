@@ -2,7 +2,17 @@ require 'pry'
 require 'minitest/autorun'
 
 class Statistician
+	def initialize given_name=nil
+		@stored_name = given_name
+		@computes = 0
+	end
+
+	def name
+		@stored_name
+	end
+
 	def mean numbers
+		@computes += 1
 		sum(numbers).to_f / numbers.count
 	end
 
@@ -34,10 +44,37 @@ class Statistician
 		sum_of_numbers
 	end
 
+	def computations_performed
+		@computes
+	end
+
+	def sleep
+		@computes = 0
+	end
+
 
 end
 
 class StatisticianTest < MiniTest::Test
+	def test_names
+		s = Statistician.new "Alice"
+		t = Statistician.new "Bob"
+		assert_equal "Alice", s.name
+		assert_equal "Bob", t.name
+	end
+
+	def test_history_tracking
+		s = Statistician.new
+		assert_equal 0, s.computations_performed
+		13.times do
+			s.mean [2,4]
+		end
+		assert_equal 13, s.computations_performed
+
+		s.sleep
+		assert_equal 0, s.computations_performed
+	end
+
 	def test_mean_of_three_numbers
 		s = Statistician.new
 		assert_equal s.mean([5,10,15]), 10
